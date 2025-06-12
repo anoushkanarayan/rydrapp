@@ -1,7 +1,8 @@
-import { StyleSheet, View, Text, TextInput, TouchableOpacity } from 'react-native';
+import { StyleSheet, View, Text, TextInput, TouchableOpacity, Keyboard, TouchableWithoutFeedback } from 'react-native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useNavigation } from '@react-navigation/native';
 import { useState } from 'react';
+import RydrLogoText from '../components/RydrLogoText';
 
 type RootStackParamList = {
   PhoneAuth: undefined;
@@ -20,30 +21,46 @@ export default function PhoneAuthScreen() {
   };
 
   return (
-    <View style={styles.container}>
-      <View style={styles.content}>
-        <Text style={styles.title}>Welcome to Rydr</Text>
-        <Text style={styles.subtitle}>Enter your phone number to continue</Text>
-        
-        <View style={styles.inputContainer}>
-          <TextInput
-            style={styles.input}
-            placeholder="Phone Number"
-            keyboardType="phone-pad"
-            value={phoneNumber}
-            onChangeText={setPhoneNumber}
-            placeholderTextColor="#9CA3AF"
-          />
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+      <View style={styles.container}>
+        <View style={styles.content}>
+          <View style={styles.titleContainer}>
+            <View style={styles.titleRow}>
+              <Text style={styles.titleText}>Welcome to </Text>
+              <View style={styles.logoInline}>
+                <RydrLogoText fontSize={36} />
+              </View>
+            </View>
+          </View>
+          <View style={styles.innerContent}>
+            <Text style={styles.subtitle}>Enter your phone number to continue</Text>
+            <View style={styles.inputContainer}>
+              <TextInput
+                style={styles.input}
+                placeholder="Phone Number"
+                keyboardType="phone-pad"
+                value={phoneNumber}
+                onChangeText={setPhoneNumber}
+                placeholderTextColor="#9CA3AF"
+                returnKeyType="done"
+              />
+            </View>
+            <TouchableOpacity 
+              style={styles.button}
+              onPress={handleContinue}
+            >
+              <Text style={styles.buttonText}>Continue</Text>
+            </TouchableOpacity>
+            <View style={styles.signInRow}>
+              <Text style={styles.signInText}>Already a ryder? </Text>
+              <TouchableOpacity>
+                <Text style={styles.signInLink}>Sign in</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
         </View>
-
-        <TouchableOpacity 
-          style={styles.button}
-          onPress={handleContinue}
-        >
-          <Text style={styles.buttonText}>Continue</Text>
-        </TouchableOpacity>
       </View>
-    </View>
+    </TouchableWithoutFeedback>
   );
 }
 
@@ -54,21 +71,32 @@ const styles = StyleSheet.create({
   },
   content: {
     flex: 1,
-    padding: 24,
+    paddingVertical: 24,
+    paddingHorizontal: 0,
     justifyContent: 'center',
   },
-  title: {
-    fontSize: 32,
+  innerContent: {
+    paddingHorizontal: 24,
+  },
+  titleContainer: {
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  titleRow: {
+    flexDirection: 'row',
+    alignItems: 'flex-end',
+  },
+  titleText: {
+    fontSize: 36,
     fontWeight: 'bold',
     color: '#1F2937',
-    marginBottom: 8,
-    textAlign: 'center',
   },
   subtitle: {
     fontSize: 16,
     color: '#6B7280',
     marginBottom: 32,
     textAlign: 'center',
+    marginTop: 12,
   },
   inputContainer: {
     marginBottom: 24,
@@ -89,6 +117,25 @@ const styles = StyleSheet.create({
   buttonText: {
     color: '#fff',
     fontSize: 16,
+    fontWeight: '600',
+  },
+  logoInline: {
+    marginLeft: -6,
+    marginBottom: -2,
+  },
+  signInRow: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 12,
+  },
+  signInText: {
+    fontSize: 13,
+    color: '#6B7280',
+  },
+  signInLink: {
+    fontSize: 13,
+    color: '#3b82f6',
     fontWeight: '600',
   },
 }); 

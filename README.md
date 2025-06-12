@@ -1,1 +1,3 @@
 # rydrapp
+
+npx expo start

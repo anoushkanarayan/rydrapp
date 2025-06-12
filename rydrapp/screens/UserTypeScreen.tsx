@@ -1,6 +1,7 @@
 import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useNavigation } from '@react-navigation/native';
+import RydrLogoText from '../components/RydrLogoText';
 
 type RootStackParamList = {
   PhoneAuth: undefined;
@@ -20,9 +21,17 @@ export default function UserTypeScreen() {
   return (
     <View style={styles.container}>
       <View style={styles.content}>
-        <Text style={styles.title}>How would you like to use Rydr?</Text>
+        <View style={styles.titleContainer}>
+          <Text style={styles.titleText}>How do you want</Text>
+          <View style={styles.titleRow}>
+            <Text style={styles.titleText}>to use </Text>
+            <View style={styles.logoInline}>
+              <RydrLogoText fontSize={28} />
+            </View>
+            <Text style={styles.titleText}>?</Text>
+          </View>
+        </View>
         <Text style={styles.subtitle}>Choose your role to continue</Text>
-
         <View style={styles.optionsContainer}>
           <TouchableOpacity 
             style={styles.option}
@@ -33,7 +42,6 @@ export default function UserTypeScreen() {
               Share your commute and earn money
             </Text>
           </TouchableOpacity>
-
           <TouchableOpacity 
             style={styles.option}
             onPress={() => handleUserTypeSelect('rider')}
@@ -59,18 +67,31 @@ const styles = StyleSheet.create({
     padding: 24,
     justifyContent: 'center',
   },
-  title: {
-    fontSize: 32,
+  titleContainer: {
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  titleRow: {
+    flexDirection: 'row',
+    alignItems: 'flex-end',
+    justifyContent: 'center',
+  },
+  titleText: {
+    fontSize: 28,
     fontWeight: 'bold',
     color: '#1F2937',
-    marginBottom: 8,
-    textAlign: 'center',
+  },
+  logoInline: {
+    marginBottom: -1,
+    marginLeft: -5,
+    marginRight: -2,
   },
   subtitle: {
     fontSize: 16,
     color: '#6B7280',
     marginBottom: 32,
     textAlign: 'center',
+    marginTop: 12,
   },
   optionsContainer: {
     gap: 16,
